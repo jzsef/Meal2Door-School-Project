@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="utf-8">
+  <title>Super User</title>
+  <link href="/style.css" rel="stylesheet" type="text/css">
+  <link rel="icon" type="image/png" href="img/favico.png"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+<ul>
+  <li><img class="logo" src="/img/navbarLogo.png" alt="Etterem"></li>
+  <li><a class="b" href="/home">Main Page</a></li>
+  <li><a class="b" href="/profil">Profile</a></li>
+  <li><a class="b" href="/logout">Logout</a></li>
+  <li sec:authorize="hasAnyAuthority('ADMIN')"><a class="b" href="/admin">Admin</a></li>
+
+  <li style="float:right"><a class="kosar" href="/kosar"><i class="fa fa-shopping-basket" style=" color:white"></i></a></li>  <li style="float:right"><a class="b" href="/profil" sec:authentication="name"></a></li>
+</ul>
+<form th:action="@{/saveall}" method="post">
+
+  <button class="buttonv2" type="submit" >Save All</button>
+</form>
+<main>
+  <table style="padding-top: 55px">
+    <thead>
+    <tr>
+      <th>Users</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="felhasznalo : ${felhasznalok}">
+      <td th:text="${felhasznalo.email}"></td>
+      <td><form th:action="@{/profil/{id}(id=${felhasznalo.id})}" method="get">
+        <button class="buttonv2" type="submit" >Modify</button>
+      </form></td>
+      <td><form th:action="@{/deleteFelhasznalo/{id}(id=${felhasznalo.id})}" method="post">
+        <input type="hidden" value="${felhasznalo.id}}" name="id" id="id">
+        <button class="buttonv2" type="submit" >Delete</button>
+      </form></td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>

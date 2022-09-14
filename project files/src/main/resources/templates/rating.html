@@ -1,0 +1,53 @@
+<!doctype html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <title>Rate us</title>
+  <link href="/style.css" rel="stylesheet" type="text/css">
+  <link rel="icon" type="image/png" href="img/logo.png"/>
+</head>
+
+<body>
+
+
+<h1 class="cim">Rate</h1>
+
+<form th:action="@{/ertekel}" method="post">
+  <div class="container">
+    <h1 th:text="${food}"></h1>
+    <hr>
+
+
+
+    <label for="csillagok"><b>Stars</b></label>
+    <select name="csillagok" id="csillagok">
+      <option value="5">5</option>
+      <option value="4">4</option>
+      <option value="3">3</option>
+      <option value="2">2</option>
+      <option value="1">1</option>
+    </select>
+    <br>
+    <label for="megjegyzes"><b>Comment</b></label>
+    <input type="text" placeholder="Enter your comment" name="megjegyzes" id="megjegyzes" required>
+    <input type="hidden" id="rendid" name="rendid" th:value="${rendid}">
+    <input type="hidden" id="termid" name="termid" th:value="${termid}">
+    <input type="hidden" id="felhid" name="felhid" th:value="${felhid}">
+    <input type="hidden" id="etterem" name="etterem" th:value="${etterem}">
+    <input type="hidden" id="termnev" name="termnev" th:value="${food}">
+    <input type="hidden" id="felhnev" name="felhnev" th:value="${felhnev}">
+
+
+
+
+
+
+    <hr>
+    <button type="submit" class="registerbtn">Rate</button>
+  </div>
+</form>
+
+</body>
+<footer>
+</footer>
+</html>

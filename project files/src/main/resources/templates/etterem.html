@@ -1,0 +1,73 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <title th:text="${etteremnev.nev}"></title>
+    <link href="/style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="img/favico.png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<nav>
+    <ul>
+        <li><img class="logo" th:src="@{https://meal2door.s3.us-east-2.amazonaws.com/profile/{fname}.png(fname=${etteremid})}" alt="Etterem"></li>
+        <li><a class="b" href="/home">Main Page</a></li>
+        <li sec:authorize="isAuthenticated()"><a class="b" href="/profil">Profile</a></li>
+        <li><a class="b" href="/logout">Logout</a></li>
+        <li><a class="b" style="color: yellow" th:href="@{/ratings/{id}(id=${etteremid})}">Ratings</a></li>
+        <li sec:authorize="hasAnyAuthority('ADMIN')"><a class="b" href="/admin">Admin</a></li>
+
+        <li sec:authorize="!hasAnyAuthority('ETTEREM')" style="float:right"><a class="kosar" href="/kosar"><i class="fa fa-shopping-basket" style=" color:white"></i></a></li>        <li style="float:right"><a class="b" href="/profil" sec:authentication="name"></a></li>
+    </ul>
+</nav>
+
+<main>
+
+    <div style="padding-top: 50px; padding-left: 80px" class="limiter">
+
+            <div class="wrap-table100">
+                <div class="table100">
+    <table> <!--style="padding-top: 55px; width: 80%"-->
+        <thead>
+        <tr>
+            <th>Picture</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="termek : ${termekek}">
+            <td><img th:src="@{https://meal2door.s3.us-east-2.amazonaws.com/products/{fname}.png(fname=${termek.id})}" alt="kep" width="320" height="180"></td>
+            <td th:text="${termek.nev}"></td>
+            <td th:text="${termek.kategoria}"></td>
+            <td th:text="${termek.ar}"></td>
+            <td class="tablecellv2" sec:authorize="hasAnyAuthority('MEGRENDELO')"><form th:action="@{/kosarba/{id}(id=${termek.id})}" method="post">
+                <button class="buttonv2" type="submit" >Add to Shopping Cart</button>
+            </form></td>
+            <td class="tablecellv2" sec:authorize="hasAnyAuthority('ADMIN')"><form th:action="@{/kosarba/{id}(id=${termek.id})}" method="post">
+                <button class="buttonv2" type="submit" >Add to Shopping Cart</button>
+            </form></td>
+            <td sec:authorize="hasAnyAuthority('ETTEREM')" style="color: red">Log In to a non restaurant in order to buy</td>
+            <td class="tablecellv2" sec:authorize="!isAuthenticated()"><form th:action="@{/kosar}" method="post">
+                <button class="buttonv2" type="submit" >Add to Shopping Cart</button>
+            </form></td>
+        </tr>
+        </tbody>
+        </table>
+                </div>
+            </div>
+        </div>
+
+</main>
+<div>
+
+</div>
+</body>
+</html>

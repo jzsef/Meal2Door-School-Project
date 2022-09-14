@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <title>Kosar</title>
+    <link href="/style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="img/favico.png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+<ul>
+    <li><img class="logo" src="/img/navbarLogo.png" alt="Etterem"></li>
+    <li><a class="b" href="/home">Main Page</a></li>
+    <li><a class="b" href="/profil">Profile</a></li>
+    <li><a class="b" href="/logout">Logout</a></li>
+    <li sec:authorize="hasAnyAuthority('ADMIN')"><a class="b" href="/admin">Admin</a></li>
+
+
+    <li style="float:right"><a class="kosar" href="/kosar"><i class="fa fa-shopping-basket" style=" color:white"></i></a></li>
+    <li style="float:right"><a class="b" href="/profil" sec:authentication="name"></a></li>
+</ul>
+
+
+<h1 class="cim">Kosár</h1>
+<hr>
+
+<div style="margin-bottom: 20px" class="alert_alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+
+<table class="egyenleg">
+    <thead>
+    <tr>
+        <th>Egyenleg</th>
+    </tr>
+    <tbody>
+    <tr class="osszeg">
+        <td th:text="${egyenleg}"></td>
+
+    </tr>
+    </tbody>
+</table>
+
+
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th> </th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="termek : ${termekek}">
+        <td th:text="${termek.nev}"></td>
+        <td th:text="${termek.ar}"></td>
+        <td><form th:action="@{/kosarbolTorles/{index}(index=${termekStat.index})}" method="post">
+            <button type="submit" >Delete</button>
+        </form></td>
+    </tr>
+    <tr class="osszeg">
+        <td>Rendelés összege </td>
+        <td th:text="${osszeg}"></td>
+
+    </tr>
+
+    </tbody>
+</table>
+
+<!-- ********************************************************************************* -->
+
+<form class="fizetesgomb" method="post" th:action="@{/rendeles}">
+    <button type="submit">
+
+<div class="container4">
+    <div class="left-side">
+        <div class="card">
+            <div class="card-line"></div>
+            <div class="buttons"></div>
+        </div>
+        <div class="post">
+            <div class="post-line"></div>
+            <div class="screen">
+                <div class="dollar">$</div>
+            </div>
+            <div class="numbers"></div>
+            <div class="numbers-line2"></div>
+        </div>
+    </div>
+    <div class="right-side">
+        <div class="new">Order
+
+        </div>
+
+        <svg class="arrow" xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 451.846 451.847"><path d="M345.441 248.292L151.154 442.573c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744L278.318 225.92 106.409 54.017c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.287 194.284c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#cfcfcf"/></svg>
+
+    </div>
+</div>
+    </button>
+</form>
+
+<!-- ************************************************************************************ -->
+
+<!--
+<form class="fizetesgomb" method="post" th:action="@{/rendeles}">
+    <button type="submit">Order</button>
+</form>
+-->
+
+</body>
+<footer>
+</footer>
+</html>

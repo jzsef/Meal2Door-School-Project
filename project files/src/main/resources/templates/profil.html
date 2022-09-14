@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<title>Profil</title>
+	<meta charset="UTF-8"/>
+	<link href="/style.css" rel="stylesheet" type="text/css">
+	<link rel="icon" type="image/png" href="img/favico.png"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+<ul>
+	<li><img class="logo" src="/img/navbarLogo.png" alt="Etterem"></li>
+	<li><a class="b" href="/home">Main Page</a></li>
+	<li><a class="b" href="/profil">Profile</a></li>
+	<li><a class="b" href="/logout">Logout</a></li>
+	<li sec:authorize="!hasAnyAuthority('ETTEREM')"><a style="color: yellow" class="b" href="/orders">Previous Orders</a></li>
+
+	<li sec:authorize="hasAnyAuthority('ADMIN')"><a class="b" href="/admin">Admin</a></li>
+	<li sec:authorize="hasAnyAuthority('ETTEREM')" style="float:left"><a class="termek" th:href="@{/termek/{id}(id=${id})}"><i class="fa fa-plus-square " style="font-size:38px; color:white"></i></a></li>	<li style="float:right"></li>
+	<li sec:authorize="hasAnyAuthority('ADMIN')" style="float:left"><a class="termek" th:href="@{/termek/{id}(id=${id})}"><i class="fa fa-plus-square " style="font-size:38px; color:white"></i></a></li>	<li style="float:right"></li>
+	<li sec:authorize="!hasAnyAuthority('ETTEREM')" style="float:right"><a class="kosar" href="/kosar"><i class="fa fa-shopping-basket" style=" color:white"></i></a></li>	<li style="float:right"><a class="b" href="/profil" sec:authentication="name"></a></li>
+</ul>
+
+<main>
+
+	<h1 class="cim">Profile</h1><br>
+	<img th:src="@{https://meal2door.s3.us-east-2.amazonaws.com/profile/{fname}.png(fname=${felhasznalo.id})}" alt="kep" width="100" height="100">
+	<form th:action="@{/uploadProfil/{file}(file=${felhasznalo.id})}" method="post" enctype="multipart/form-data">
+	<input type="file" name="file"  accept="image/png" required>
+	<input type="hidden" name="fname" th:value="${felhasznalo.id}">
+	<input type="submit"  value="Submit">
+	</form>
+	<div class="tablediv2">
+		<table class="tablazat2">
+			<tr>
+				<td>Name: </td>
+				<td th:text="${nev}"></td>
+				<td><b>New Name:</b></td>
+				<td><form th:action="@{/updateNev/{id}(id=${id})}" method="post">
+					<input type="text" placeholder="Enter name" name="nev" id="nev" required>
+					<button type="submit" >Modify</button>
+				</form></td>
+			</tr>
+			<tr>
+				<td>Email: </td>
+				<td th:text="${email}"></td>
+			</tr>
+			<tr>
+				<td>Phone Number: </td>
+				<td th:text="${telefonszam}"></td>
+				<td><b>New Phone Number:</b></td>
+				<td><form th:action="@{/updateTelefonszam/{id}(id=${id})}" method="post">
+					<input type="text" placeholder="Enter phone number" name="telefonszam" id="telefonszam" required>
+					<button type="submit" >Modify</button>
+				</form></td>
+			</tr>
+			<tr>
+				<td>Birth Date:</td>
+				<td th:text="${szuletesi_datum}"></td>
+			</tr>
+			<tr>
+
+				<td>Address:</td>
+				<td th:text="${cim}"></td>
+				<td><b>New Address:</b></td>
+				<td><form th:action="@{/updateCim/{id}(id=${id})}" method="post">
+					<input type="text" placeholder="Enter address" name="cim" id="cim" required>
+					<button type="submit" >Modify</button>
+				</form></td>
+			</tr>
+			<tr sec:authorize="!hasAnyAuthority('ETTEREM')">
+				<td>Balance: </td>
+				<td th:text="${egyenleg}"></td>
+				<td><form th:action="@{/fizetes/{id}(id=${id})}" method="get">
+					<button type="submit" >Pay</button>
+				</form></td>
+			</tr>
+
+		</table>
+	</div>
+	<br>
+	<div>
+		<table class="termekchange">
+			<tbody>
+			<tr th:each="termek : ${termekek}">
+					<td><form th:action="@{/upload/{file}(file=${termek.id})}" method="post" enctype="multipart/form-data">
+
+						<input type="file" name="file"  accept="image/png" required>
+						<input type="hidden" name="fname" th:value="${termek.id}">
+						<input type="submit"  value="Submit">
+					</form></td>
+
+					<td><form th:action="@{/updateTermekNev/{id}(id=${termek.id})}" method="post">
+						<label class="label" for="prodname" th:text="${termek.nev}"></label>
+						<input id="prodname" type="text" placeholder="New Name" name="nev" required>
+						<button type="submit" >Modify</button>
+					</form></td>
+
+				<td><form th:action="@{/updateTermekKategoria/{id}(id=${termek.id})}" method="post">
+						<label class="label" for="kat" th:text="${termek.kategoria}"></label>
+						<input id="kat" type="text" placeholder="New Category" name="kategoria" required>
+						<button type="submit" >Modify</button>
+					</form></td>
+
+				<td><form th:action="@{/updateTermekAr/{id}(id=${termek.id})}" method="post">
+						<label class="label" for="ar" th:text="${termek.ar}"></label>
+						<input id="ar" type="text" placeholder="New Price" name="ar" required>
+						<button type="submit" >Modify</button>
+					</form></td>
+				<td><form th:action="@{/deleteTermek/{id}(id=${termek.id})}" method="post">
+					<button type="submit" >Delete</button>
+				</form></td>
+			</tr>
+<!--			<tr th:each="termek : ${termekek}">-->
+<!--				<td th:text="${termek.nev}"></td>-->
+<!--				<td th:text="${termek.ar}"></td>-->
+<!--			</tr>-->
+			</tbody>
+		</table>
+	</div>
+</main>
+<aside>
+
+</aside>
+<footer class="footer2">
+
+</footer>
+</body>
+</html>

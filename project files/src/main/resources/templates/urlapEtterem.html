@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>urlap</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="img/favico.png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<ul>
+    <li><img class="logo" src="img/navbarLogo.png" alt="Etterem"></li>
+    <li><a class="b"  href="/index">Fő oldal</a></li>
+    <li><a class="b" href="/profil">Profil</a></li>
+    <li><a class="b" href="/register">Register</a></li>
+    <li><a class="b" href="/login">Login</a></li>
+    <li style="float:right"><a class="kosar" href="kosar.html"><i class="fa fa-shopping-basket" style=" color:white"></i></a></li>
+
+</ul>
+
+<form th:action="@{/addEtterem}" method="post">
+    <div class="container">
+        <h1>Étterem regisztrálás</h1>
+        <hr>
+        <label for="etteremNev"><b>Étterem neve</b></label>
+        <input type="text" placeholder="Enter name" name="etteremNev" id="etteremNev" required>
+
+        <label for="etteremEmail"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="etteremEmail" id="etteremEmail" required>
+
+        <label for="etteremCim"><b>Cím</b></label>
+        <input type="text" placeholder="Enter Address" name="etteremCim" id="etteremCim" required>
+
+        <label for="etteremTelefonszam"><b>Telefonszám</b></label>
+        <input type="text" placeholder="Enter Phone Number" name="etteremTelefonszam" id="etteremTelefonszam" required>
+
+        <label for="etteremHonlap"><b>Születési Dátum</b></label>
+        <input type="text" placeholder="Enter Website" name="etteremHonlap" id="etteremHonlap" required>
+
+        <label for="etteremJelszo"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="etteremJelszo" id="etteremJelszo" required>
+
+
+        <hr>
+
+        <button type="submit" class="registerbtn">Register</button>
+    </div>
+</form>
+</body>
+</html>

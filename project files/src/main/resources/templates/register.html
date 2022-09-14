@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Register</title>
+    <link href="/style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="img/favico.png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div></div>
+<div class="alert_alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+<form th:action="@{/addFelhasznalo}" method="post">
+    <div class="container">
+        <h1>Register</h1>
+        <hr>
+
+        <label for="nev"><b>Full Name</b></label>
+        <input type="text" placeholder="Enter Name" name="nev" id="nev" required>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" id="email" required>
+
+        <label for="jelszo"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="jelszo" id="jelszo" required>
+
+        <label for="telefonszam"><b>Phone Number</b></label>
+        <input type="text" placeholder="Enter Phone Number" name="telefonszam" id="telefonszam" required>
+
+        <label for="szuletesi_datum"><b>Birth Date</b></label><br>
+        <input type="date" placeholder="Enter Birth Date" name="szuletesi_datum" id="szuletesi_datum" required><br><br>
+
+        <label for="cim"><b>Delivery Address</b></label>
+        <input type="text" placeholder="Enter Address" name="cim" id="cim" required>
+
+        <label for="etterem"><b>Are you a restaurant?</b></label>
+        <input type="checkbox" name="etterem" id="etterem">
+
+        <input type="hidden" value="0" name="etterem">
+
+        <hr>
+        <button type="submit" class="registerbtn">Register</button>
+    </div>
+</form>
+</body>
+</html>
